@@ -1,26 +1,88 @@
-import util from 'util';
+import commandLineArgs from 'command-line-args';
+import commandLineUsage from 'command-line-usage';
+import daemon from 'daemon';
 import {nfc} from 'nfc';
 
-const inspect = (data) => util.inspect(data, {depth: null});
+import start from './server';
 
-console.log('nfc.version(): ', inspect(nfc.version()));
-console.log('nfc.scan(): ', inspect(nfc.scan()));
+const pkg = require('../package.json');
 
-const readDevice = () => {
-    const device = new nfc.NFC();
-    device.on('read', (tag) => {
-        console.log(tag);
+// Define command line options
+const optionDefinitions = [{
+    name: 'help',
+    alias: 'H',
+    type: Boolean,
+    description: 'Display usage information.'
+}, {
+    name: 'version',
+    alias: 'v',
+    type: Boolean,
+    description: 'Display version information.'
+}, {
+    name: 'daemon',
+    alias: 'd',
+    type: Boolean,
+    description: 'Run as daemon (background).'
+}, {
+    name: 'host',
+    alias: 'h',
+    type: String,
+    defaultValue: '127.0.0.1',
+    description: 'The host to bind the WebSocket server to.'
+}, {
+    name: 'port',
+    alias: 'p',
+    type: Number,
+    defaultValue: 5000,
+    description: 'The port to bind the WebSocket server to.'
+}, {
+    name: 'timeout',
+    alias: 't',
+    type: Number,
+    defaultValue: 5000,
+    description: 'Timeout in milliseconds between reading NFC tags (by default 5 seconds).'
+},  {
+    name: 'verbose',
+    alias: 'V',
+    type: Boolean,
+    description: 'Verbose logging (i.e. print all read NFC tags).'
+}];
 
-        // if (tag.data && tag.offset) {
-        //     console.log(inspect(nfc.parse(tag.data.slice(tag.offset))));
-        // }
-    }).on('stopped', () => {
-        console.log('stopped');
+// Define command line usage
+const usageDefinition = [{
+    header: 'NFC Daemon',
+    content: 'Simple Node.js daemon which reads NFC tags and exposes a WebSocket with the information.'
+}, {
+    header: 'Options',
+    optionList: optionDefinitions
+}];
 
-        setTimeout(readDevice, 1000);
-    }).on('error', (err) => {
-        console.error(err);
-    }).start();
-};
+// Parse options and usage definitions
+const options = commandLineArgs(optionDefinitions);
+const usage = commandLineUsage(usageDefinition);
 
-readDevice();
+// Process options
+if (options.daemon) {
+    // Restart application as daemon
+    daemon();
+    console.log(`NFC daemon started with PID ${process.pid}`)
+} else {
+    if (options.help) {
+        // Display usage information
+        console.log(usage);
+
+        // Exit after printing information
+        process.exit(0);
+    } else if (options.version) {
+        // Display version information
+        const version = nfc.version();
+        console.log(`NFC daemon version ${pkg.version}`);
+        console.log(`  - ${version.name} ${version.version}`);
+
+        // Exit after printing information
+        process.exit(0);
+    }
+}
+
+// Start NFC daemon
+start(options);
