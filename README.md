@@ -25,8 +25,8 @@ Options
   -H, --help             Display usage information.
   -v, --version          Display version information.
   -d, --daemon           Run as daemon (background).
-  -h, --host string      The host to bind the WebSocket server to.
-  -p, --port number      The port to bind the WebSocket server to.
+  -h, --host string      The host to bind the WebSocket server to (by default 127.0.0.1).
+  -p, --port number      The port to bind the WebSocket server to (by default 5000).
   -t, --timeout number   Timeout in milliseconds between reading NFC tags (by default 5 seconds).
   -V, --verbose          Verbose logging (i.e. print all read NFC tags).
 ```

@@ -1,13 +1,32 @@
 {
   "name": "nfc-daemon",
-  "version": "0.1.0",
+  "description": "Simple Node.js daemon which reads NFC tags and exposes a WebSocket with the information.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Daniel Huisman <daniel@huisman.me> (https://danielhuisman.io)",
+  "repository": "https://github.com/DanielHuisman/node-nfc-daemon.git",
+  "keywords": [
+    "nfc",
+    "tag",
+    "read",
+    "daemon"
+  ],
+  "main": "lib/index.js",
+  "bin": "./cli.js",
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE.md",
+    "package.json"
+  ],
   "scripts": {
     "lint": "eslint --color src",
-    "build": "babel src --out-dir dist",
-    "start": "node dist/index.js",
+    "build": "babel src --out-dir lib",
+    "start": "node lib/index.js",
     "dev": "babel-node src/index.js"
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "bufferutil": "^3.0.0",
     "command-line-args": "^4.0.4",
     "command-line-usage": "^4.0.0",
@@ -18,6 +37,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "eslint": "^3.19.0",

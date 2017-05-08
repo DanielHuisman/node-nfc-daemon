@@ -40,8 +40,8 @@ const optionDefinitions = [{
     alias: 't',
     type: Number,
     defaultValue: 5000,
-    description: 'Timeout in milliseconds between reading NFC tags (by default 5 seconds).'
-},  {
+    description: 'Timeout in milliseconds between reading NFC tags.'
+}, {
     name: 'verbose',
     alias: 'V',
     type: Boolean,
@@ -65,7 +65,7 @@ const usage = commandLineUsage(usageDefinition);
 if (options.daemon) {
     // Restart application as daemon
     daemon();
-    console.log(`NFC daemon started with PID ${process.pid}`)
+    console.log(`NFC daemon started with PID ${process.pid}`);
 } else {
     if (options.help) {
         // Display usage information

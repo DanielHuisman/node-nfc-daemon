@@ -2,7 +2,7 @@ import util from 'util';
 import WebSocket from 'ws';
 import {nfc} from 'nfc';
 
-const inspect = (data) => util.inspect(data, {depth: null})
+const inspect = (data) => util.inspect(data, {depth: null});
 
 const start = ({host, port, verbose = false, timeout = 5000, restartTimeout = 500}) => {
     // Start WebSocket server
