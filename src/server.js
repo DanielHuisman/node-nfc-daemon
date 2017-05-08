@@ -11,6 +11,8 @@ const start = ({host, port, verbose = false, timeout = 5000, restartTimeout = 50
         port
     });
 
+    console.log(`Started WebSocket server on ${host}:${port}`);
+
     // Define variables and hooks
     let lastId = null;
     const clearLastId = () => lastId = null;

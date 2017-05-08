@@ -1,4 +1,3 @@
 #! /usr/bin/env node
 
-require('babel-polyfill');
-require();
+require('./lib/index.js');

@@ -1,7 +1,7 @@
 {
   "name": "nfc-daemon",
   "description": "Simple Node.js daemon which reads NFC tags and exposes a WebSocket with the information.",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "license": "MIT",
   "author": "Daniel Huisman <daniel@huisman.me> (https://danielhuisman.io)",
   "repository": "https://github.com/DanielHuisman/node-nfc-daemon.git",
@@ -15,6 +15,7 @@
   "bin": "./cli.js",
   "files": [
     "lib",
+    "cli.js",
     "README.md",
     "LICENSE.md",
     "package.json"
@@ -23,7 +24,8 @@
     "lint": "eslint --color src",
     "build": "babel src --out-dir lib",
     "start": "node lib/index.js",
-    "dev": "babel-node src/index.js"
+    "dev": "babel-node src/index.js",
+    "prepublish": "yarn run lint && yarn run build"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
